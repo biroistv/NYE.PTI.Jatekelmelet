@@ -6,10 +6,8 @@
 int main()
 {
     srand(time(NULL));
-
-    printf("\nSolution 2:\n\n");
-
-    int starterGraphSize = 5;
+    
+    int starterGraphSize = 10;
     int *pStarterGraphSize = &starterGraphSize;
 
     short graphMatrix[NUMBER_OF_NODES][NUMBER_OF_NODES];
@@ -17,7 +15,7 @@ int main()
 
     generateGraph(graphMatrix, graphAttributes , pStarterGraphSize);
     
-
+    printf("A program lefutott, nyomj egy gombot a kilépéshez!");
     getchar();
     return 0;
 }

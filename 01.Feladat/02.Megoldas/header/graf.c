@@ -4,10 +4,6 @@
 #include <stdio.h>
 #include <time.h>
 
-// TODO: Írni egy megszámlaló függvény ami megszámolja az egyedi előfordulásokat, C++-ban fogom
-
-short tree[NUMBER_OF_NODES][NUMBER_OF_NODES];
-
 /*
     A gráf generálásáért és egyébb a gráfon végzett műveletért velelős függvény.
 */
@@ -16,8 +12,11 @@ void generateGraph(short graphMatrix[NUMBER_OF_NODES][NUMBER_OF_NODES], Graph gr
     resetGraph(graphMatrix);
     nodeAttributesReset(graphAttributes);
 
-    printf("\n\nKezdő gráf megadása után a mátrix:\n");
+    //printf("\n\nKezdő gráf megadása után a mátrix:\n");
     generateStarterGraph(graphMatrix, graphAttributes, pStarterGraphSize);
+
+    FILE* fp1 = fopen(output, "w");
+    int counter = 1;
 
     while (*pStarterGraphSize <= NUMBER_OF_NODES)
     {
@@ -25,15 +24,17 @@ void generateGraph(short graphMatrix[NUMBER_OF_NODES][NUMBER_OF_NODES], Graph gr
 
         ++(*pStarterGraphSize);
         
-        printf("Cost: %d\n", getTreeCost(1, graphMatrix, graphAttributes, pStarterGraphSize));
-        //vizsgáljuk meg az út távolságot
-        //írjuk fájlba a kapott értéket (előbb adjuk egy tömbhöz)
+        fprintf(fp1, "%d\t%d\n", counter, getTreeCost(1, graphMatrix, graphAttributes, pStarterGraphSize));
+
+        ++counter;
     }
 
-    consolePrintOut(graphMatrix, graphAttributes);
+    //consolePrintOut(graphMatrix, graphAttributes);
+
+    fclose(fp1);
 
     return;
-}
+} // !generateGraph
 
 /*
     Beállítja a gráf csúcsainak értékeit nullára
@@ -47,7 +48,7 @@ void resetGraph(short graphMatrix[NUMBER_OF_NODES][NUMBER_OF_NODES])
         }
 
     return;
-}
+}   // !resetGraph
 
 /*
     Részeredmények konzolra iratása
@@ -66,7 +67,7 @@ void consolePrintOut(short graphMatrix[NUMBER_OF_NODES][NUMBER_OF_NODES], Graph 
         }
     
     return;
-}
+}   // !consolePrintOut
 
 /*
     Elkészítem a kezdő gráfot
@@ -92,7 +93,7 @@ void generateStarterGraph(short graphMatrix[NUMBER_OF_NODES][NUMBER_OF_NODES], G
     setNodeAttributes(graphMatrix, graphAttributes, pStarterGraphSize);
 
     return;
-}
+} // !generateStarterGraph
 
 /*
     Megnézem az új csúcs értékeket és módosítim a meglévőket
@@ -118,7 +119,7 @@ void setNodeAttributes(short graphMatrix[NUMBER_OF_NODES][NUMBER_OF_NODES], Grap
         graphAttributes[i].connectionChance = graphAttributes[i].numberOfNeighbours * (((float)(*pStarterGraphSize) / getNeighbourSum(graphAttributes, pStarterGraphSize)) / (float)*pStarterGraphSize);
 
     return;
-}
+}// !setNodeAttributes
 
 /*
     Kezdő gráf létrehozásánal használt véletlen szám generátor
@@ -137,7 +138,7 @@ int getNeighbourSum(Graph graphAttributes[NUMBER_OF_NODES], int* pStarterGraphSi
     }
 
     return sum;
-}
+}   // !getNeighbourSum
 
 void nodeAttributesReset(Graph graphAttributes[NUMBER_OF_NODES])
 {
@@ -148,7 +149,7 @@ void nodeAttributesReset(Graph graphAttributes[NUMBER_OF_NODES])
     }
 
     return;
-}
+}   // !nodeAttributesReset
 
 void addNode(short graphMatrix[NUMBER_OF_NODES][NUMBER_OF_NODES], Graph graphAttributes[NUMBER_OF_NODES], int* pStarterGraphSize)
 {
@@ -170,64 +171,26 @@ void addNode(short graphMatrix[NUMBER_OF_NODES][NUMBER_OF_NODES], Graph graphAtt
     setNodeAttributes(graphMatrix, graphAttributes, pStarterGraphSize);
 
     return;
-}
+}   // !addNode
 /*
 -----------------------------------------------------------------------------
 */
 
 int getTreeCost(int src, short graphMatrix[NUMBER_OF_NODES][NUMBER_OF_NODES], Graph graphAttributes[NUMBER_OF_NODES], int* pStarterGraphSize)
 {
-    int visited[NUMBER_OF_NODES], d[NUMBER_OF_NODES], parent[NUMBER_OF_NODES];
-    int i,j,k,min,u,v,cost;
-    int n = getNumberOfNodes(graphAttributes, pStarterGraphSize); //ezt még majd ki kell számolnom
-    for(i = 1; i<= n; i++)
-    {
-        d[i] = graphMatrix[src][i];
-        visited[i] = 0;
-        parent[i] = src;
-    }
+    int treeCost = 0;
 
-    visited[src] = 0;
-    cost = 0;
-    k = 1;
-
-    for (i = 1; i < n; i++)
-    {
-        min = 9999;
-        for (j = 1; j <= n; j++)
-        {
-            if (visited[j]==0 && d[j] < min)
+    for (int x = 0; x < *pStarterGraphSize; ++x)
+        for (int y = 0; y < NUMBER_OF_NODES; ++y)
+            if (x <= y)
             {
-                min = d[j];
-                u = j;
-                cost += d[u];
+                //graphMatrix[y][x] = (short)0;
             }
-        }
-        visited[u] = 1;
-        //cost = cost + d[u];
-        tree[k][1] = parent[u];
-        tree[k++][2] = u;
-        for ( v = 1; v <= n; v++)
-        {
-            if (visited[v]==0 && (graphMatrix[u][v] < d[v]))
+            else
             {
-                d[v] = graphMatrix[u][v];
-                parent[v] = u;
+                if (graphMatrix[x][y] > 0)
+                    treeCost += graphMatrix[x][y];
             }
-        }
-    }
-    return cost;
-}
 
-int getNumberOfNodes(Graph graphAttributes[NUMBER_OF_NODES], int* pStarterGraphSize)
-{
-    int numberOfNodes = 0;
-
-    for (int i = 0; i < *pStarterGraphSize; ++i)
-        if (graphAttributes[i].numberOfNeighbours > 0)
-            ++numberOfNodes;
-
-    return numberOfNodes; 
-}
-
-// TODO: fájlba iratás
+    return treeCost;
+}   // !getTreeCost
