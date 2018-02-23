@@ -28,4 +28,6 @@ void nodeAttributesReset(Graph graphAttributes[NUMBER_OF_NODES]);
 
 int getNumberOfNodes(Graph graphAttributes[NUMBER_OF_NODES], int* pStarterGraphSize);
 
+void printGraf(short grafMatrix[NUMBER_OF_NODES][NUMBER_OF_NODES], int num);
+
 #endif //GRAF_H

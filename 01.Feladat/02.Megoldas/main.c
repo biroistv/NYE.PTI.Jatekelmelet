@@ -1,13 +1,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include <time.h>
+
 #include "./header/const.h"
 
 int main()
 {
     srand(time(NULL));
     
-    int starterGraphSize = 10;
+    int starterGraphSize = STARTER_GRAPH_SIZE;
     int *pStarterGraphSize = &starterGraphSize;
 
     short graphMatrix[NUMBER_OF_NODES][NUMBER_OF_NODES];

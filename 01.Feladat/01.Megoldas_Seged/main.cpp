@@ -7,7 +7,7 @@
 /*
     Automatikusan megszámlálja az egyes értékek előfordulását és fájlba írja.
 */
-int main()
+int main(int argc, char* argv[])
 {
     std::ifstream in{};
     std::ofstream out{};
@@ -15,8 +15,9 @@ int main()
     std::vector<std::string> strVector{};
     std::map<std::string, int> uniqMap{};
 
-    in.open("./szamok.txt");    //Ide kell a bejövő txt
-    out.open("./jo_szamok.txt");    //Ide a kiemeneti txt
+    in.open(argv[1]); 
+    std::string ki{argv[1]};  //Ide kell a bejövő txt
+    out.open("./jo_" + ki);    //Ide a kiemeneti txt
 
     if (!out) 
         std::cout << "Nem jó";
@@ -39,7 +40,7 @@ int main()
 
     for(auto var : uniqMap)
     {   
-        out << var.first<< "\t" << var.second << "\n";
+        out << var.first << "\t" << var.second << "\n";
     }
 
     in.close();

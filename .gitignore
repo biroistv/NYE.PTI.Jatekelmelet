@@ -50,3 +50,9 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+
+01\.Feladat/01\.Megoldas/szamok_25_1000\.txt
+
+01\.Feladat/01\.Megoldas/szamok_40_100\.txt
+
+*.txt

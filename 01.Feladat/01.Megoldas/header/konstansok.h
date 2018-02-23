@@ -1,9 +1,9 @@
 #ifndef KONSTANSOK_H
 #define KONSTANSOK_H
 
-#define CSUCSOK_SZAMA 10 
-#define KAPCSOLODAS_ESELYE 40  // A csúcshoz kapcsolódás %-os esélye
-#define output "szamok.txt"
+#define CSUCSOK_SZAMA 100
+#define KAPCSOLODAS_ESELYE 75  // A csúcshoz kapcsolódás %-os esélye
+#define output "szamok_75_100.txt"
 
 #define MINIMALIS_KOLTSEG 1
 #define MAXIMALIS_KOLTSEG 9

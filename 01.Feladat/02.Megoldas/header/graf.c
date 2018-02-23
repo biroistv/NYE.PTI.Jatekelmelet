@@ -1,37 +1,46 @@
 #include "graf.h"
 
 #include <stdlib.h>
-#include <stdio.h>
-#include <time.h>
+#include "stdio.h"
+#include <string.h>
 
 /*
     A gráf generálásáért és egyébb a gráfon végzett műveletért velelős függvény.
 */
 void generateGraph(short graphMatrix[NUMBER_OF_NODES][NUMBER_OF_NODES], Graph graphAttributes[NUMBER_OF_NODES], int *pStarterGraphSize)
 {
-    resetGraph(graphMatrix);
-    nodeAttributesReset(graphAttributes);
 
-    //printf("\n\nKezdő gráf megadása után a mátrix:\n");
-    generateStarterGraph(graphMatrix, graphAttributes, pStarterGraphSize);
-
-    FILE* fp1 = fopen(output, "w");
-    int counter = 1;
-
-    while (*pStarterGraphSize <= NUMBER_OF_NODES)
+    for (int i = 0; i < 1000; ++i)
     {
-        addNode(graphMatrix, graphAttributes, pStarterGraphSize);
+        //fileName = "asd";
+        *pStarterGraphSize = STARTER_GRAPH_SIZE;
+        resetGraph(graphMatrix);
+        nodeAttributesReset(graphAttributes);
 
-        ++(*pStarterGraphSize);
+        //printf("\n\nKezdő gráf megadása után a mátrix:\n");
+        generateStarterGraph(graphMatrix, graphAttributes, pStarterGraphSize);
+
+        //FILE* fp1 = fopen(output, "w");
+        //int counter = 1;
         
-        fprintf(fp1, "%d\t%d\n", counter, getTreeCost(1, graphMatrix, graphAttributes, pStarterGraphSize));
 
-        ++counter;
+        while (*pStarterGraphSize <= NUMBER_OF_NODES)
+        {
+            addNode(graphMatrix, graphAttributes, pStarterGraphSize);
+
+            ++(*pStarterGraphSize);
+            
+            //fprintf(fp1, "%d\t%d\n", counter, getTreeCost(1, graphMatrix, graphAttributes, pStarterGraphSize));
+
+            //++counter;
+        }
+
+        //consolePrintOut(graphMatrix, graphAttributes);
+
+        //fclose(fp1);
+        printGraf(graphMatrix, i);
+        printf("Tesz %d kész!\n",i);
     }
-
-    //consolePrintOut(graphMatrix, graphAttributes);
-
-    fclose(fp1);
 
     return;
 } // !generateGraph
@@ -43,9 +52,7 @@ void resetGraph(short graphMatrix[NUMBER_OF_NODES][NUMBER_OF_NODES])
 {
     for (int x = 0; x < NUMBER_OF_NODES; ++x)
         for (int y = 0; y < NUMBER_OF_NODES; ++y)
-        {
             graphMatrix[x][y] = (short)0;
-        }
 
     return;
 }   // !resetGraph
@@ -59,7 +66,7 @@ void consolePrintOut(short graphMatrix[NUMBER_OF_NODES][NUMBER_OF_NODES], Graph 
         {
             for (int y = 0; y < NUMBER_OF_NODES; ++y)
             {
-                printf("%d ", graphMatrix[x][y]);
+                //printf("%d ", graphMatrix[x][y]);
                 //printf("{s:%d,e:%1.2f} ", graphMatrix[x][y].szomszedokSzama, graphMatrix[x][y].esely);
             }
 
@@ -193,4 +200,44 @@ int getTreeCost(int src, short graphMatrix[NUMBER_OF_NODES][NUMBER_OF_NODES], Gr
             }
 
     return treeCost;
+
+    
 }   // !getTreeCost
+
+void printGraf(short grafMatrix[NUMBER_OF_NODES][NUMBER_OF_NODES], int num)
+{
+    int darab = 0;
+
+    //fprintf(Fajlnev, "%f\t%f\n", *x, *y);
+		char filename[50];      //Karakter tömb a fájlnévnek.
+		char numbering[7];      //Karakter tömb az adat fájl sorszámozásának.
+
+		strcpy(filename, "eredmenyek/");    //A fájl elérési útját és nevét a karakter tömbbe másoljuk. (Csak a biztonság kedvéért nem adjuk át az értéket a tömbnek deklarálásnál.)
+		int integer = num;
+		snprintf(numbering, sizeof(numbering), "%d", integer);                                              //itoa() - "i" integer-t "numbering" karakter tömbbe írja, karakter típusként, 10-es számrendszerben számítva. (int to ASCII)
+		strcat(filename, numbering);
+		strcat(filename, "e");                                        //Konkatenálja a fájl nevét a sorszámozásával.
+		strcat(filename, ".txt");   
+
+        FILE* fp1 = fopen(filename, "w"); 
+
+    for (int x = 0; x < NUMBER_OF_NODES; ++x)
+    {
+        darab = 0;
+        for (int y = 0; y < NUMBER_OF_NODES; ++y)
+        {
+                if (grafMatrix[x][y] > 0)
+                {
+                    darab++;
+                }
+
+        }
+
+	fprintf(fp1, "%d\n", /*((float)*/ darab /* / CSUCSOK_SZAMA)*/);
+
+    }
+
+    fclose(fp1);
+
+    return;
+}
