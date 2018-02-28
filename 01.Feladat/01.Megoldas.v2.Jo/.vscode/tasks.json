@@ -1,0 +1,32 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "f1_graf_v2",
+            "type": "shell",
+            "command": "gcc",
+            "args": [
+                "-Wall",
+                "-std=c11",
+                "-fno-stack-protector",
+
+                "-o",
+                "${workspaceFolder}/main.out",
+
+                "-g",
+                "${workspaceFolder}/main.c",
+                "${workspaceFolder}/header/konstansok.h",
+                "${workspaceFolder}/header/graf.h",
+                "${workspaceFolder}/header/graf.c",
+
+                "-lm"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        }
+    ]
+}
