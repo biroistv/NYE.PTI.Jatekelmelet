@@ -42,20 +42,6 @@ void resetGraph(short graphMatrix[NUMBER_OF_NODES][NUMBER_OF_NODES])
     return;
 }   // !resetGraph
 
-void consolePrintOut(short graphMatrix[NUMBER_OF_NODES][NUMBER_OF_NODES], Graph graphAttributes[NUMBER_OF_NODES])
-{
-    for (int x = 0; x < NUMBER_OF_NODES; ++x)
-        {
-            for (int y = 0; y < NUMBER_OF_NODES; ++y)
-            {
-            }
-
-            printf("{s:%d,e:%1.3f}\n", graphAttributes[x].numberOfNeighbours, graphAttributes[x].connectionChance);
-        }
-    
-    return;
-}   // !consolePrintOut
-
 void generateStarterGraph(short graphMatrix[NUMBER_OF_NODES][NUMBER_OF_NODES], Graph graphAttributes[NUMBER_OF_NODES], int* pStarterGraphSize)
 {
     for (int x = 0; x < *pStarterGraphSize; ++x)

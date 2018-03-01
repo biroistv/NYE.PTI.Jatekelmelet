@@ -14,8 +14,6 @@ void generateStarterGraph(short graphMatrix[NUMBER_OF_NODES][NUMBER_OF_NODES], G
 
 void setNodeAttributes(short graphMatrix[NUMBER_OF_NODES][NUMBER_OF_NODES], Graph graphAttributes[NUMBER_OF_NODES], int* pStarterGraphSize);
 
-void consolePrintOut(short graphMatrix[NUMBER_OF_NODES][NUMBER_OF_NODES], Graph graphAttributes[NUMBER_OF_NODES]);
-
 void addNode(short graphMatrix[NUMBER_OF_NODES][NUMBER_OF_NODES], Graph graphAttributes[NUMBER_OF_NODES], int* pStarterGraphSize);
 
 boolean isNeighbour(float chance);
