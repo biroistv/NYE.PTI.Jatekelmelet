@@ -1,6 +1,7 @@
 #ifndef CONST_H
 #define CONST_H
 
+#define TESZTEK_SZAMA 100
 #define NUMBER_OF_NODES 1000
 #define STARTER_GRAPH_SIZE 3
 #define CONNECTION_CHANCE 1.0f

@@ -7,7 +7,7 @@
 void generateGraph(short graphMatrix[NUMBER_OF_NODES][NUMBER_OF_NODES], Graph graphAttributes[NUMBER_OF_NODES], int *pStarterGraphSize)
 {
 
-    for (int i = 0; i < 10; ++i)
+    for (int i = 0; i < TESZTEK_SZAMA; ++i)
     {
         printf("%d.\n",i + 1);
         *pStarterGraphSize = STARTER_GRAPH_SIZE;

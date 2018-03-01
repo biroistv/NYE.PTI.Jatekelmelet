@@ -12,8 +12,8 @@ int main()
 
     std::ifstream inAdatok{};
     
-    std::ofstream outEsely{"./outEsely.txt"};
-    std::ofstream outEloszlas{"./outEloszlas.txt"};
+    std::ofstream outEsely{"./outEsely2.txt"};
+    std::ofstream outEloszlas{"./outEloszlas2.txt"};
 
     std::string inputs{};
     std::string tmp{};
@@ -24,7 +24,7 @@ int main()
 
     for (int i = 0; i < 100; ++i)
     {
-        inputs = "./results/res_" + std::to_string(i) + ".txt";
+        inputs = "./results2/res_" + std::to_string(i) + ".txt";
         inAdatok.open(inputs);
 
         if (!inAdatok)
@@ -67,12 +67,12 @@ int main()
         /*if (logf(var.first) == -INFINITY)
             outEloszlas << 0 << "\t";
         else*/ 
-            outEsely << logf((float)count) << "\t";
+            outEsely << (float)count << "\t";
 
         /*if (logf(var.second / 100) == -INFINITY)
             outEloszlas << 0 << "\n";
         else*/
-            outEsely << logf(((float)var / 100) / 1000 * 100) << "\n";
+            outEsely << ((float)var / 100) / 1000 * 100 << "\n";
 
             ++count;
     }
