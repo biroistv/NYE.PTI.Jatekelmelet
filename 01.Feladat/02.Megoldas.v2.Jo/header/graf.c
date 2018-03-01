@@ -7,7 +7,7 @@
 void generateGraph(short graphMatrix[NUMBER_OF_NODES][NUMBER_OF_NODES], Graph graphAttributes[NUMBER_OF_NODES], int *pStarterGraphSize)
 {
 
-    for (int i = 0; i < 100; ++i)
+    for (int i = 0; i < 10; ++i)
     {
         printf("%d.\n",i + 1);
         *pStarterGraphSize = STARTER_GRAPH_SIZE;
@@ -125,21 +125,27 @@ void nodeAttributesReset(Graph graphAttributes[NUMBER_OF_NODES])
 
 void addNode(short graphMatrix[NUMBER_OF_NODES][NUMBER_OF_NODES], Graph graphAttributes[NUMBER_OF_NODES], int* pStarterGraphSize)
 {
-    boolean gotANeighbour = False;
+    boolean gotTwoNeighbour = False;
     int x = 0;
+    int countOfNeighbour = 0;
 
-    while (!gotANeighbour)
+    while (!gotTwoNeighbour)
     {
          x = rand()%*pStarterGraphSize;
 
         if (isNeighbour((graphAttributes[x].connectionChance * 100)))
+        {
+            if (graphMatrix[x][*pStarterGraphSize-1] == 0)
             {
-                short weight = rand() % MAX_WEIGHT + MIN_WEIGHT;
-                graphMatrix[x][*pStarterGraphSize-1] = weight;
-                graphMatrix[*pStarterGraphSize-1][x] = weight;
-
-                gotANeighbour = True;
+            short weight = rand() % MAX_WEIGHT + MIN_WEIGHT;
+            graphMatrix[x][*pStarterGraphSize-1] = weight;
+            graphMatrix[*pStarterGraphSize-1][x] = weight;
+            ++countOfNeighbour;
             }
+
+            if (countOfNeighbour == 2)
+                gotTwoNeighbour = True;
+        }
     }
 
     setNodeAttributes(graphMatrix, graphAttributes, pStarterGraphSize);
