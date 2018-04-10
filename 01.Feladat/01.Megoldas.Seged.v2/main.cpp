@@ -10,6 +10,7 @@ int main()
 {
     //std::vector<float> f2Vec(10000,0);
     std::map<float, int> f2Map{};
+    std::vector<int> esely(1000, 0);
 
     for (int i{0}; i < 1000; ++i)
         f2Map[i] = 0;
@@ -20,8 +21,8 @@ int main()
     std::string str{};
     std::string openf{};
 
-    out.open("atlag.txt");
-    out2.open("darab.txt");
+    out.open("./esely.txt");
+    out2.open("./eloszlas.txt");
 
     float value {};
     int pos{0};
@@ -53,6 +54,7 @@ int main()
             while(std::getline(in, str))
             {
                 value = atoi(str.c_str());
+                esely.at(pos) += value;
                 f2Map[value]++;
                 pos++;
             }
@@ -60,6 +62,13 @@ int main()
 
         pos = 0;
         in.close();
+    }
+
+    int db{0};
+    for (auto var : esely)
+    {
+        out << db << "\t" << ((float)var / 100) / 1000 * 100 << std::endl;
+        ++db;
     }
 
     for (auto var : f2Map)

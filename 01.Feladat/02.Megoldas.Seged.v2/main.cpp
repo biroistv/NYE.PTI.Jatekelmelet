@@ -14,6 +14,7 @@ int main()
     
     std::ofstream outEsely{"./outEsely2.txt"};
     std::ofstream outEloszlas{"./outEloszlas2.txt"};
+    std::ofstream outLogEsely{"./outLogEsely2.txt"};
 
     std::string inputs{};
     std::string tmp{};
@@ -77,6 +78,24 @@ int main()
             ++count;
     }
 
+    for (auto var : eselyVector)
+    {
+        /*if (logf(var.first) == -INFINITY)
+            outEloszlas << 0 << "\t";
+        else*/ 
+            outLogEsely << log10l((long double)count) << "\t";
+
+        /*if (logf(var.second / 100) == -INFINITY)
+            outEloszlas << 0 << "\n";
+        else*/
+        if (log10l(((long double)var / 100) / 1000 * 100) > 0)
+            outLogEsely << log10l(((long double)var / 100) / 1000 * 100) << "\n";
+        else
+            outLogEsely << 0 << std::endl;
+            ++count;
+    }
+
+    outLogEsely.close();
     outEsely.close();
     outEloszlas.close();
 
